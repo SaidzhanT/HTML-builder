@@ -17,4 +17,3 @@ inputOutput.on('line', (input) => {
     process.exit(0);
   }
 });
-
