@@ -2,12 +2,15 @@ console.log('Введи желаемый текст или "exit" для вых�
 
 const fs = require('node:fs');
 const readline = require('node:readline');
+const path = require('node:path')
+
 const inputOutput = readline.createInterface({
   input: process.stdin,
   output: process.stdout
 });
 
-const streamRecording = fs.createWriteStream('02-write-file.txt');
+const filePath = path.join(__dirname, '02-write-file.txt');
+const streamRecording = fs.createWriteStream(filePath);
 inputOutput.on('line', (input) => {
   if (input !== 'exit') {
     streamRecording.write(input + '\n');
@@ -16,4 +19,9 @@ inputOutput.on('line', (input) => {
     console.log('До свидания!');
     process.exit(0);
   }
+});
+
+inputOutput.on('SIGINT', () => {
+  console.log('До свидания!');
+  process.exit();
 });
