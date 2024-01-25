@@ -2,9 +2,13 @@ const fs = require('node:fs');
 const path = require('node:path');
 const inputStyles = path.join(__dirname, 'styles'); 
 const outputResult = path.join(__dirname, 'project-dist');
-if (!fs.existsSync(outputResult)){
-    fs.mkdirSync(outputResult);
-}
+fs.access(outputResult, fs.constants.F_OK, (err) => {
+  if (err) {
+    fs.mkdir(outputResult, { recursive: true }, (err) => {
+      if (err) throw err;
+    });
+  }
+});
 
 let arrStyle = [];
 
